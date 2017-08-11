@@ -1,4 +1,4 @@
-package com.stewhouse.kotlinexamples
+package com.stewhouse.kotlinexample
 
 import org.junit.Test
 
