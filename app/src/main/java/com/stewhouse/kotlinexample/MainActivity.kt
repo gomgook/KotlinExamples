@@ -6,12 +6,20 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
+fun AppCompatActivity.b() { // For this function is not a part of the class which is overrided, so it won't use hidden caching.
+    Log.e("TEST", "AppCompatActivity.b()")
+}
+
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    fun MainActivity.a() {  // The hidden caching of this function will be generated inside MainActivity's code.
+        Log.e("TEST", "MainActivity.a()")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +37,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        a() // Call MainActivity.a()
+        b() // Call AppCompatActivity.b()
     }
 
     override fun onBackPressed() {
