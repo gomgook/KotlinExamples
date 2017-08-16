@@ -1,8 +1,8 @@
 package com.stewhouse.kotlinexample
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -12,13 +12,13 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-fun AppCompatActivity.b() { // For this function is not a part of the class which is overrided, so it won't use hidden caching.
-    Log.e("TEST", "AppCompatActivity.b()")
+fun AppCompatActivity.extensionFunOutsideClass() { // For this function is not a part of the class which is overrided, so it won't use hidden caching.
+    Log.e("MainActivity", "AppCompatActivity.b()")
 }
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    fun MainActivity.a() {  // The hidden caching of this function will be generated inside MainActivity's code.
-        Log.e("TEST", "MainActivity.a()")
+    fun MainActivity.extensionFunInsideClass() {  // The hidden caching of this function will be generated inside MainActivity's code.
+        Log.e("MainActivity", "MainActivity.a()")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +38,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        a() // Call MainActivity.a()
-        b() // Call AppCompatActivity.b()
+
+        // Kotlin Android Extensions.
+        extensionFunInsideClass() // Call MainActivity.a()
+        extensionFunOutsideClass() // Call AppCompatActivity.b()
+
+        // Null safety check and using let.
+        var str: String? = "abc"
+//        var str : String = "abc"                          // It occurs an warning because str is always not null, so it doesn't need to pass through if phrase.
+//        var str : String                                  // It occurs an error forces to initialize the string.
+        var strLen = if (str != null) str.length else -1    // Kotlin smart casts str : String? to str : String.
+
+        Log.e("MainActivity", "str: $str, strLen: $strLen")
+
+        var kotlinClass: FirstKotlinClass = FirstKotlinClass()
+        kotlinClass.safeCalls()
+        kotlinClass.elvisOperator(str)
     }
 
     override fun onBackPressed() {
