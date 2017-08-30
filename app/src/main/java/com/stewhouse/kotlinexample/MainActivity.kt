@@ -39,21 +39,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
 
+        /**
+         * Kotlin Example codes.
+         **/
+
         // Kotlin Android Extensions.
         extensionFunInsideClass() // Call MainActivity.a()
         extensionFunOutsideClass() // Call AppCompatActivity.b()
 
         // Null safety check and using let.
-        var str: String? = "abc"
+        val str: String? = "abc"
 //        var str : String = "abc"                          // It occurs an warning because str is always not null, so it doesn't need to pass through if phrase.
 //        var str : String                                  // It occurs an error forces to initialize the string.
-        var strLen = if (str != null) str.length else -1    // Kotlin smart casts str : String? to str : String.
+        val strLen = if (str != null) str.length else -1    // Kotlin smart casts str : String? to str : String.
 
         Log.e("MainActivity", "str: $str, strLen: $strLen")
 
-        var kotlinClass: FirstKotlinClass = FirstKotlinClass()
+        val kotlinClass = FirstKotlinClass()
+
         kotlinClass.safeCalls()
         kotlinClass.elvisOperator(str)
+        kotlinClass.NPEOperator(null)
+        Log.e("MainActivity", "Convert String value: ${kotlinClass.safeCasts("StringValue")}, Convert other value: ${kotlinClass.safeCasts(3)}")
+
+        val convertedStr: String? = kotlinClass.safeCasts("String's here!")
+
+        Log.e("MainActivity", "Q. Who's there? A. $convertedStr")
+
+        kotlinClass.collectionsOfNullableType()
     }
 
     override fun onBackPressed() {

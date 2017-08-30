@@ -23,4 +23,22 @@ class FirstKotlinClass: AppCompatActivity() {
 
         Log.e("FirstKotlinClass", "val l: $l")
     }
+
+    fun NPEOperator(b: String?) = try {
+        val l = b!!.length      // This will occur KotlinNullPointerException.
+    } catch (e: Throwable) {
+        e.printStackTrace()
+    }
+
+    fun safeCasts(any: Any): String? {
+        return any as? String   // If any cannot be converted to String, it'll return null.
+    }
+
+    fun collectionsOfNullableType() {
+        val nullableList: List<String?> = listOf("Arthur", "Lancelot", null, "Bedivere", "Merlin")
+        val notNullList: List<String> = nullableList.filterNotNull()
+
+        Log.e("FirstKotlinClass", "nullableList: $nullableList")
+        Log.e("FirstKotlinClass", "notNullList: $notNullList")
+    }
 }
